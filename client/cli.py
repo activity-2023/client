@@ -47,8 +47,9 @@ def main():
     logger.debug("Arguments parsed.")
 
     if args.command == "gui":
-        gui = Gui()
-        gui()
+        logger.info("Not yet implemented!")
+        # gui = Gui()
+        # gui()
     elif args.command == "configure":
         client = Client(dict(
             host_address=args.host,
