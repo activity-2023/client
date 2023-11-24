@@ -1,32 +1,51 @@
-class AccessError(Exception):
-    def __init__(self):
-        error = "L'identifiant de la personne n'existe ou la personne n'a pas accès à la salle"
-        super().__init__(error)
-
-
-class PwdError(Exception):
-    def __init__(self):
-        error = "Mot de passe incorrect après 3 tentative connexion interrompue"
-        super().__init__(error)
-
-
-class RoomError(Exception):
-    def __init__(self):
-        error = "L'identifiant de la salle n'existe pas"
-        super().__init__(error)
-
-
-class ConnectError(Exception):
-    def __init__(self, host, port):
-        self.host = host
-        self.port = str(port)
+class BadProtocol(Exception):
+    def __init__(self, message: str):
         super().__init__(self)
+        self.message = message
 
-    def __str__(self):
-        return "Echec de connection vers le serveur (" + self.host + "," + self.port + ")"
+    def __str__(self) -> str:
+        return self.message
 
 
-class TimeOutServer(Exception):
-    def __init__(self):
-        message = "[CONNECTION INTERRUPTED] Le serveur a mis trop de temps à répondre"
-        super().__init__(message)
+class BadConfig(Exception):
+    def __init__(self, message: str):
+        super().__init__(self)
+        self.message = message
+
+    def __str__(self) -> str:
+        return self.message
+
+
+class BadData(Exception):
+    def __init__(self, message: str):
+        super().__init__(self)
+        self.message = message
+
+    def __str__(self) -> str:
+        return self.message
+
+
+class IncorrectId(Exception):
+    def __init__(self, message: str):
+        super().__init__(self)
+        self.message = message
+
+    def __str__(self) -> str:
+        return self.message
+
+
+class AccessError(Exception):
+    def __init__(self, message: str):
+        super().__init__(self)
+        self.message = message
+
+    def __str__(self) -> str:
+        return self.message
+
+class BadPassword(Exception):
+    def __init__(self, message: str):
+        super().__init__(self)
+        self.message = message
+
+    def __str__(self) -> str:
+        return self.message
