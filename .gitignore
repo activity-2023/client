@@ -1,3 +1,7 @@
+### Application specific
+# Config file
+/config.toml
+
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json
