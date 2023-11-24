@@ -1,4 +1,4 @@
-from client import client
+from client import cli
 
 if __name__ == "__main__":
-    client.main()
+    cli.main()
