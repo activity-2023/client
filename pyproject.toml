@@ -10,6 +10,9 @@ python = "^3.11"
 structlog = "^23.2.0"
 rich = "^13.7.0"
 colorama = "^0.4.6"
+customtkinter = "^5.2.1"
+packaging = "^23.2"
+python-dotenv = "^1.0.0"
 
 
 [build-system]
