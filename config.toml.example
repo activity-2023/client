@@ -1,7 +1,0 @@
-[client]
-client_type = "ROOM or BUILDING"
-client_id = db_id_of_this_client
-
-[network]
-host_address = "server_address"
-host_port = server_port
