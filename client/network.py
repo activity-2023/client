@@ -1,5 +1,3 @@
-import getpass
-import traceback
 from enum import IntEnum, verify, UNIQUE
 import hashlib
 import socket
@@ -38,7 +36,7 @@ def net_code(code: ProtocolCode) -> bytes:
     return code.value.to_bytes(1, "big")
 
 
-def process(sock: socket.socket, config: dict) -> None:
+def process(sock: socket.socket, config: dict, person_id: int, pin: str) -> None:
     client_type: str = config["client_type"]
     client_id: int = config["client_id"]
 
@@ -65,10 +63,6 @@ def process(sock: socket.socket, config: dict) -> None:
             else:
                 raise BadProtocol("Bad protocol!")
 
-        person_id = int(input("Please enter your ID: "))
-        if person_id < 1 or person_id > 2147483647:
-            raise IncorrectId(f"The person_id {person_id} is not correct. Please try again.")
-
         to_send.clear()
         to_send.extend(net_code(ProtocolCode.PERSONID))
         to_send.extend(person_id.to_bytes(4, "big"))
@@ -92,8 +86,6 @@ def process(sock: socket.socket, config: dict) -> None:
         nonce = data.decode()
         if not nonce.isdigit():
             raise BadProtocol("Bad protocol!")
-
-        pin = getpass.getpass("Please enter your PIN: ")
 
         pin_hash = hashlib.sha256(pin.encode()).hexdigest()
         secured_hash = hashlib.sha256((pin_hash + nonce).encode()).digest()

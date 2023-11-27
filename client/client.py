@@ -1,8 +1,10 @@
+import getpass
+import re
 import socket
 
 import structlog
 
-import client.error
+from client.error import IncorrectId, BadPassword
 import client.network
 
 logger = structlog.get_logger()
@@ -27,12 +29,25 @@ class Client:
 
     def start(self):
         try:
+            person_id = int(input("Please enter your ID: "))
+            if person_id < 1 or person_id > 2147483647:
+                raise IncorrectId(f"The person_id {person_id} is not correct. Please try again.")
+
+            pin = getpass.getpass("Please enter your PIN: ")
+            pattern = re.compile(r"^[0-9]{4}$")
+            if not pattern.fullmatch(pin):
+                raise BadPassword("Incorrect password! Try again.")
+
             self.client_socket.settimeout(5)
             self.client_socket.connect((Client.HOST_ADDRESS, Client.HOST_PORT))
 
-            client.network.process(self.client_socket, self.config)
-        except ConnectionRefusedError as e:
+            client.network.process(self.client_socket, self.config, person_id, pin)
+        except ConnectionRefusedError:
             logger.critical(f"Connection refused by {Client.HOST_ADDRESS}:{Client.HOST_PORT}. The server may be down.")
+        except BadPassword:
+            print("Wrong password, please try again.")
+        except IncorrectId:
+            print("You are not allowed to enter here.")
 
     def populate_params(self):
         Client.HOST_ADDRESS = self.config["host_address"]
