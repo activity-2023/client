@@ -44,6 +44,8 @@ class Client:
             client.network.process(self.client_socket, self.config, person_id, pin)
         except ConnectionRefusedError:
             logger.critical(f"Connection refused by {Client.HOST_ADDRESS}:{Client.HOST_PORT}. The server may be down.")
+        except ValueError:
+            print("Wrong ID., please try again.")
         except BadPassword:
             print("Wrong password, please try again.")
         except IncorrectId:
