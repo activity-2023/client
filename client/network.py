@@ -111,5 +111,7 @@ def process(sock: socket.socket, config: dict, person_id: int, pin: str) -> None
         print("Wrong password, please try again.")
     except IncorrectId:
         print("You are not allowed to enter here.")
+    except AccessError:
+        print("You are not allowed to access this room now.")
     finally:
         sock.close()
