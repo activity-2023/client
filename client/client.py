@@ -50,7 +50,9 @@ class Client:
             print("Wrong password, please try again.")
         except IncorrectId:
             print("You are not allowed to enter here.")
+        except TimeoutError:
+            logger.error("The client is taking too long to respond.")
 
     def populate_params(self):
-        Client.HOST_ADDRESS = self.config["host_address"]
-        Client.HOST_PORT = self.config["host_port"]
+        Client.HOST_ADDRESS = self.config["host_address"] if self.config["host_address"] else Client.HOST_ADDRESS
+        Client.HOST_PORT = self.config["host_port"] if self.config["host_port"] else Client.HOST_PORT
